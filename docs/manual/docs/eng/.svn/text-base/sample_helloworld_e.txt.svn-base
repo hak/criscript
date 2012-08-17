@@ -1,7 +1,0 @@
-
-/*EN
-	\ingroup CRI_SCRIPT_SAMPLES
-	\file helloworld.cpp
-	\brief This sample demonstrates how to use a basic functionality of CRI Script compiler and VM
-	\include "helloworld.cpp"
-*/

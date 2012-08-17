@@ -1,52 +1,0 @@
-9
-
-dir
-194
-svn://criscript.com/trunk/src
-svn://criscript.com
-
-
-
-2008-07-25T00:04:30.345932Z
-138
-hak
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-8df91265-c305-dd11-86b3-003048958ff2
-
-BuiltInObject
-dir
-
-CodeGen
-dir
-
-Debugger
-dir
-
-Parser
-dir
-
-Reader
-dir
-
-VM
-dir
-
-Writer
-dir
-
-boost
-dir
-

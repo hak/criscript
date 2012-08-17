@@ -1,7 +1,0 @@
-
-/*EN
-	\ingroup CRI_SCRIPT_SAMPLES
-	\file invoke_script_function.cpp
-	\brief This sample demonstrates how to invoke a script function from C++ code.
-	\include "invoke_script_function.cpp"
-*/

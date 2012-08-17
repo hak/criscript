@@ -1,7 +1,0 @@
-
-/*EN
-	\ingroup CRI_SCRIPT_SAMPLES
-	\file basic_userapi_bind.cpp
-	\brief This sample demonstrates how to bind a user function to the scripting engine with a simple wrapper generation feature.
-	\include "basic_userapi_bind.cpp"
-*/
