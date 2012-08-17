@@ -1,0 +1,104 @@
+#!/bin/sh
+
+#
+# Main build command for CriScript
+# Calls actual build script, saving all output, and emails results
+# to one or more recipients
+# * Assumes existence and proper configuration of 'email(1)'
+
+# Those recipients (must be separated by commas):
+#
+EMAIL_RECIPIENTS='tchipperfield@cri-mw.com,hak@cri-mw.com'
+# EMAIL_RECIPIENTS='tchipperfield@cri-mw.com'
+
+# NOTE: BUILD_DIR must match the parallel value in build.sh.
+# This will change.
+BUILD_DIR='/criscript'
+BUILD_SCRIPT="$BUILD_DIR/build.sh"
+
+# keep distinct logfiles to avoid permission issues?
+LOG_FILE="$BUILD_DIR/build.log"
+
+# If this file exists, build is assumed to be currently in progress
+BUILD_RUNNING_FLAG="$BUILD_DIR/building.flag"
+
+# Subversion user, password - referencesd in various scripts
+SVN_USER='cri-script-build'
+SVN_PASSWORD='fO#*7bSiw2'
+export SVN_USER SVN_PASSWORD
+
+# Date format for begin/end log messages
+# Format is "H:M:S[AM|PM] on DOW, MNAME D, Y
+# e.g. 11:52:07 PM on Jan 31, 2009
+# '-' flag: Do not left-pad the field
+DATESPEC='+%-l:%M:%S %p on %a, %b %d, %Y'
+
+# Called at the end of processing to report success or failure
+# Attaches build log
+# send_email_notification(success)
+send_email_notification()
+{
+    case "$1" in
+    0)
+        subject='CriScript build process completed successfully'
+        body='The build was successful.  The log is attached.'
+        ;;
+	-1)
+		subject='The CriScript build process is already running!'
+		body="The build process was started on `cat "$BUILD_RUNNING_FLAG"`"
+		;;
+    *)
+        subject='There were errors in the CriScript build process'
+        body='One or more steps in the process failed.  The log is attached.'
+        ;;
+    esac
+
+    # As this is going to (a) user(s) on (a) DOS machine(s), fuck up the line endings
+    cat "$LOG_FILE" | sed -e 's/$/\r/' > "$LOG_FILE.txt"
+    echo "$body" | email -q -s"$subject" -a"$LOG_FILE.txt" $EMAIL_RECIPIENTS
+    rm "$LOG_FILE.txt"
+}
+
+#
+# Entry
+#
+
+# Make sure we're not already doing this
+if [ -e "$BUILD_RUNNING_FLAG" ]; then
+	send_email_notification -1
+	exit 255
+fi
+
+# Now lock it ourselves
+date > "$BUILD_RUNNING_FLAG"
+echo "(Started by '`whoami`')" >> "$BUILD_RUNNING_FLAG"
+
+# Work around permission issues (Cygwin-specific, or just me?) with multiple users
+# changing the logfile
+# Alernatively: mv $LOG_FILE $LOG_FILE.`whoami` (to keep running logs)
+[ -e "$LOG_FILE" ] && rm "$LOG_FILE"
+
+# Force blank lines around actual script output
+echo "* Build begins @ `date "$DATESPEC"`
+* Build initiated by [`whoami`]
+" > "$LOG_FILE"
+
+# Run the build, logging all.  Save exit status.
+"$BUILD_SCRIPT" >> "$LOG_FILE" 2>&1
+status=$?
+
+# Clear these now, for security's sake
+SVN_USER=
+SVN_PASSWORD=
+export SVN_USER SVN_PASSWORD
+
+echo "
+* Build finishes @ `date "$DATESPEC"`" >> "$LOG_FILE"
+
+# Tell whoever about it
+send_email_notification $status
+
+# Release our lock
+rm -f "$BUILD_RUNNING_FLAG"
+
+# Anything else to do?

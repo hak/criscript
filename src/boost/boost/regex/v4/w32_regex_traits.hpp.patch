@@ -1,0 +1,29 @@
+--- w32_regex_traits.hpp.original	2007-11-14 10:55:41.000000000 -0800
++++ w32_regex_traits.hpp	2007-11-14 13:27:17.000000000 -0800
+@@ -621,13 +621,23 @@
+    }
+    bool isctype(charT c, char_class_type f) const
+    {
+-      if((f & re_detail::w32_regex_traits_implementation<charT>::mask_base) 
++      if((f & re_detail::w32_regex_traits_implementation<charT>::mask_word))
++      {
++         if( c >= 'A' && c <= 'Z' )
++            return true;
++         if( c >= 'a' && c <= 'z' )
++            return true;
++         if( c >= '0' && c <= '9' )
++            return true;
++         if( c == '_' )
++            return true;
++         return false;
++      }
++      else if((f & re_detail::w32_regex_traits_implementation<charT>::mask_base) 
+          && (this->m_pimpl->isctype(f & re_detail::w32_regex_traits_implementation<charT>::mask_base, c)))
+          return true;
+       else if((f & re_detail::w32_regex_traits_implementation<charT>::mask_unicode) && re_detail::is_extended(c))
+          return true;
+-      else if((f & re_detail::w32_regex_traits_implementation<charT>::mask_word) && (c == '_'))
+-         return true;
+       return false;
+    }
+    int toi(const charT*& p1, const charT* p2, int radix)const

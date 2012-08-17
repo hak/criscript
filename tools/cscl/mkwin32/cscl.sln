@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cscl", "cscl.vcproj", "{9201F02E-492B-40F1-8345-2E1DD0D287A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886} = {81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CRIScript", "..\..\..\build\win32\CRIScript\CRIScript\CRIScript.vcproj", "{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9201F02E-492B-40F1-8345-2E1DD0D287A9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9201F02E-492B-40F1-8345-2E1DD0D287A9}.Debug|Win32.Build.0 = Debug|Win32
+		{9201F02E-492B-40F1-8345-2E1DD0D287A9}.Release|Win32.ActiveCfg = Release|Win32
+		{9201F02E-492B-40F1-8345-2E1DD0D287A9}.Release|Win32.Build.0 = Release|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Debug|Win32.ActiveCfg = Debug|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Debug|Win32.Build.0 = Debug|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Release|Win32.ActiveCfg = Release|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

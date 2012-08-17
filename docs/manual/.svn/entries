@@ -1,0 +1,34 @@
+9
+
+dir
+194
+svn://criscript.com/trunk/docs/manual
+svn://criscript.com
+
+
+
+2008-04-24T21:21:32.253028Z
+54
+hak
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+8df91265-c305-dd11-86b3-003048958ff2
+
+docs
+dir
+
+makedocs
+dir
+

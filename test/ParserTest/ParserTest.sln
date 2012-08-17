@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CriScript", "..\..\build\win32\CRIScript\CRIScript\CRIScript.vcproj", "{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserTest", "ParserTest\ParserTest.vcproj", "{5CF90F78-25BD-4987-B1C3-177168747AB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886} = {81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		ErrorTest|Win32 = ErrorTest|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Debug|Win32.ActiveCfg = Debug|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Debug|Win32.Build.0 = Debug|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.ErrorTest|Win32.ActiveCfg = Release|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.ErrorTest|Win32.Build.0 = Release|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Release|Win32.ActiveCfg = Release|Win32
+		{81BA7C4C-3ACE-4B1F-BA96-EBA234DEB886}.Release|Win32.Build.0 = Release|Win32
+		{5CF90F78-25BD-4987-B1C3-177168747AB3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5CF90F78-25BD-4987-B1C3-177168747AB3}.Debug|Win32.Build.0 = Debug|Win32
+		{5CF90F78-25BD-4987-B1C3-177168747AB3}.ErrorTest|Win32.ActiveCfg = ErrorTest|Win32
+		{5CF90F78-25BD-4987-B1C3-177168747AB3}.ErrorTest|Win32.Build.0 = ErrorTest|Win32
+		{5CF90F78-25BD-4987-B1C3-177168747AB3}.Release|Win32.ActiveCfg = Release|Win32
+		{5CF90F78-25BD-4987-B1C3-177168747AB3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

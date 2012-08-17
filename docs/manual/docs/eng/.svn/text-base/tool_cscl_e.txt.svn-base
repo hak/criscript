@@ -1,0 +1,20 @@
+
+/*EN
+	\ingroup CRI_SCRIPT_TOOLS
+	\defgroup cscl
+	cscl is Cri Script command exection environment.
+	cscl compiles, links and executes specfied ECMAScript file.
+	
+	<b>cscl</b> [OPTIONS] ScriptFile
+	
+	Options:<br>
+	<table>
+	<tr><td><b>-suppress:banner</b></td><td>Suppress a banner display</td></tr>
+	<tr><td><b>-suppress:errorline</b></td><td>Suppress an error line display when an compiler/linker error happens</td></tr>
+	<tr><td><b>-execute</b></td><td>Execute a script</td></tr>
+	</table>
+
+	Note:<br>
+	A script file should be in UTF-16 BOM now.
+
+*/

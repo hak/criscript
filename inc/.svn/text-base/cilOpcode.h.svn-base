@@ -1,0 +1,499 @@
+/****************************************************************************
+ *
+ * CRI Middleware SDK
+ *
+ * Copyright (c) 2008 CRI Middleware, Inc. All rights reserved.
+ *
+ * Use, modification and distribution are subject to the CRI Script Software
+ * License, Version 1.0(see accompanying file "CriScript_License_1_0.txt" or
+ * copy at www.criscript.com/trac/wiki/CRI%20Script%20Software%20License%201.0 ).
+ *
+ *
+ * Library  : CRIScript
+ * Module   : cil definitions
+ * File     : cilOpCode.h
+ * Date     : 
+ * Version  : 
+ *
+ ****************************************************************************/
+#pragma once
+
+#include "ICodeGen.h"
+using namespace std;
+
+namespace cri {
+
+//
+// Build / decompose tokens.
+//
+#define RidToToken(rid,tktype) ((rid) |= (tktype))
+#define TokenFromRid(rid,tktype) ((rid) | (tktype))
+#define RidFromToken(tk) ((RID) ((tk) & 0x00ffffff))
+#define TypeFromToken(tk) ((uint32_t)((tk) & 0xff000000))
+#define isNilToken(tk) ((RidFromToken(tk)) == 0)
+#define isBuiltinRid(tk) ((tk) & 0x800000)
+#define IndexFromBuiltinRid(tk) (int32_t)(-(int32_t)((tk) | 0xff000000) - 1)
+
+const uint32_t MAX_RID_ENTRY = 0xffffff;
+
+enum OP_CODE {
+	CEE_NOP			= 0x00,
+	CEE_BREAK		= 0x01,
+	CEE_LDARG_0		= 0x02,
+	CEE_LDARG_1		= 0x03,
+	CEE_LDARG_2		= 0x04,
+	CEE_LDARG_3		= 0x05,
+	CEE_LDLOC_0		= 0x06,
+	CEE_LDLOC_1		= 0x07,
+	CEE_LDLOC_2		= 0x08,
+	CEE_LDLOC_3		= 0x09,
+	CEE_STLOC_0		= 0x0A,
+	CEE_STLOC_1		= 0x0B,
+	CEE_STLOC_2		= 0x0C,
+	CEE_STLOC_3		= 0x0D,
+	CEE_LDARG_S		= 0x0E,
+	CEE_LDARGA_S	= 0x0F,
+	CEE_STARG_S		= 0x10,
+	CEE_LDLOC_S		= 0x11,
+	CEE_LDLOCA_S	= 0x12,
+	CEE_STLOC_S		= 0x13,
+	CEE_LDNULL		= 0x14,
+	CEE_LDC_I4_M1	= 0x15,
+	CEE_LDC_I4_0	= 0x16,
+	CEE_LDC_I4_1	= 0x17,
+	CEE_LDC_I4_2	= 0x18,
+	CEE_LDC_I4_3	= 0x19,
+	CEE_LDC_I4_4	= 0x1A,
+	CEE_LDC_I4_5	= 0x1B,
+	CEE_LDC_I4_6	= 0x1C,
+	CEE_LDC_I4_7	= 0x1D,
+	CEE_LDC_I4_8	= 0x1E,
+	CEE_LDC_I4_S	= 0x1F,
+	CEE_LDC_I4		= 0x20,
+	CEE_LDC_I8		= 0x21,
+	CEE_LDC_R4		= 0x22,
+	CEE_LDC_R8		= 0x23,
+	CEE_UNUSED49	= 0x24,
+	CEE_DUP			= 0x25,
+	CEE_POP			= 0x26,
+	CEE_JMP			= 0x27,
+	CEE_CALL		= 0x28,
+	CEE_CALLI		= 0x29,
+	CEE_RET			= 0x2A,
+	CEE_BR_S		= 0x2B,
+	CEE_BRFALSE_S	= 0x2C,
+	CEE_BRTRUE_S	= 0x2D,
+	CEE_BEQ_S		= 0x2E,
+	CEE_BGE_S		= 0x2F,
+	CEE_BGT_S		= 0x30,
+	CEE_BLE_S		= 0x31,
+	CEE_BLT_S		= 0x32,
+	CEE_BNE_UN_S	= 0x33,
+	CEE_EXT_BNGE_S	= 0x34,
+	CEE_EXT_BNGT_S	= 0x35,
+	CEE_EXT_BNLE_S	= 0x36,
+	CEE_EXT_BNLT_S	= 0x37,
+	//CEE_BGE_UN_S	= 0x34,
+	//CEE_BGT_UN_S	= 0x35,
+	//CEE_BLE_UN_S	= 0x36,
+	//CEE_BLT_UN_S	= 0x37,
+	CEE_BR			= 0x38,
+	CEE_BRFALSE		= 0x39,
+	CEE_BRTRUE		= 0x3A,
+	CEE_BEQ			= 0x3B,
+	CEE_BGE			= 0x3C,
+	CEE_BGT			= 0x3D,
+	CEE_BLE			= 0x3E,
+	CEE_BLT			= 0x3F,
+	CEE_BNE_UN		= 0x40,
+	CEE_EXT_BNGE	= 0x41,
+	CEE_EXT_BNGT	= 0x42,
+	CEE_EXT_BNLE	= 0x43,
+	CEE_EXT_BNLT	= 0x44,
+	//CEE_BGE_UN		= 0x41,
+	//CEE_BGT_UN		= 0x42,
+	//CEE_BLE_UN		= 0x43,
+	//CEE_BLT_UN		= 0x44,
+	CEE_SWITCH		= 0x45,
+	CEE_LDIND_I1	= 0x46,
+	CEE_LDIND_U1	= 0x47,
+	CEE_LDIND_I2	= 0x48,
+	CEE_LDIND_U2	= 0x49,
+	CEE_LDIND_I4	= 0x4A,
+	CEE_LDIND_U4	= 0x4B,
+	CEE_LDIND_I8	= 0x4C,
+	CEE_LDIND_I		= 0x4D,
+	CEE_LDIND_R4	= 0x4E,
+	CEE_LDIND_R8	= 0x4F,
+	CEE_LDIND_REF	= 0x50,
+	CEE_STIND_REF	= 0x51,
+	CEE_STIND_I1	= 0x52,
+	CEE_STIND_I2	= 0x53,
+	CEE_STIND_I4	= 0x54,
+	CEE_STIND_I8	= 0x55,
+	CEE_STIND_R4	= 0x56,
+	CEE_STIND_R8	= 0x57,
+	CEE_ADD			= 0x58,
+	CEE_SUB			= 0x59,
+	CEE_MUL			= 0x5A,
+	CEE_DIV			= 0x5B,
+	CEE_DIV_UN		= 0x5C,
+	CEE_REM			= 0x5D,
+	CEE_REM_UN		= 0x5E,
+	CEE_AND			= 0x5F,
+	CEE_OR			= 0x60,
+	CEE_XOR			= 0x61,
+	CEE_SHL			= 0x62,
+	CEE_SHR			= 0x63,
+	CEE_SHR_UN		= 0x64,
+	CEE_NEG			= 0x65,
+	CEE_NOT			= 0x66,
+	CEE_CONV_I1		= 0x67,
+	CEE_CONV_I2		= 0x68,
+	CEE_CONV_I4		= 0x69,
+	CEE_CONV_I8		= 0x6A,
+	CEE_CONV_R4		= 0x6B,
+	CEE_CONV_R8		= 0x6C,
+	CEE_CONV_U4		= 0x6D,
+	CEE_CONV_U8		= 0x6E,
+	CEE_CALLVIRT	= 0x6F,
+	CEE_CPOBJ		= 0x70,
+	CEE_LDOBJ		= 0x71,
+	CEE_LDSTR		= 0x72,
+	CEE_NEWOBJ		= 0x73,
+	CEE_CASTCLASS	= 0x74,
+	CEE_ISINST		= 0x75,
+	CEE_CONV_R_UN	= 0x76,
+	CEE_UNUSED58	= 0x77,
+	CEE_UNUSED1		= 0x78,
+	CEE_UNBOX		= 0x79,
+	CEE_THROW		= 0x7A,
+	CEE_LDFLD		= 0x7B,
+	CEE_LDFLDA		= 0x7C,
+	CEE_STFLD		= 0x7D,
+	CEE_LDSFLD		= 0x7E,
+	CEE_LDSFLDA		= 0x7F,
+	CEE_STSFLD		= 0x80,
+	CEE_STOBJ		= 0x81,
+	CEE_CONV_OVF_I1_UN	= 0x82,
+	CEE_CONV_OVF_I2_UN	= 0x83,
+	CEE_CONV_OVF_I4_UN	= 0x84,
+	CEE_CONV_OVF_I8_UN	= 0x85,
+	CEE_CONV_OVF_U1_UN	= 0x86,
+	CEE_CONV_OVF_U2_UN	= 0x87,
+	CEE_CONV_OVF_U4_UN	= 0x88,
+	CEE_CONV_OVF_U8_UN	= 0x89,
+	CEE_CONV_OVF_I_UN	= 0x8A,
+	CEE_CONV_OVF_U_UN	= 0x8B,
+	CEE_BOX			= 0x8C,
+	CEE_NEWARR		= 0x8D,
+	CEE_LDLEN		= 0x8E,
+	CEE_LDELEMA		= 0x8F,
+	CEE_LDELEM_I1	= 0x90,
+	CEE_LDELEM_U1	= 0x91,
+	CEE_LDELEM_I2	= 0x92,
+	CEE_LDELEM_U2	= 0x93,
+	CEE_LDELEM_I4	= 0x94,
+	CEE_LDELEM_U4	= 0x95,
+	CEE_LDELEM_I8	= 0x96,
+	CEE_LDELEM_I	= 0x97,
+	CEE_LDELEM_R4	= 0x98,
+	CEE_LDELEM_R8	= 0x99,
+	CEE_LDELEM_REF	= 0x9A,
+	CEE_STELEM_I	= 0x9B,
+	CEE_STELEM_I1	= 0x9C,
+	CEE_STELEM_I2	= 0x9D,
+	CEE_STELEM_I4	= 0x9E,
+	CEE_STELEM_I8	= 0x9F,
+	CEE_STELEM_R4	= 0xA0,
+	CEE_STELEM_R8	= 0xA1,
+	CEE_STELEM_REF	= 0xA2,
+	CEE_LDELEM		= 0xA3,
+	CEE_STELEM		= 0xA4,
+	CEE_UNBOX_ANY	= 0xA5,
+	CEE_UNUSED5		= 0xA6,
+	CEE_UNUSED6		= 0xA7,
+	CEE_UNUSED7		= 0xA8,
+	CEE_UNUSED8		= 0xA9,
+	CEE_UNUSED9		= 0xAA,
+	CEE_UNUSED10	= 0xAB,
+	CEE_UNUSED11	= 0xAC,
+	CEE_UNUSED12	= 0xAD,
+	CEE_UNUSED13	= 0xAE,
+	CEE_UNUSED14	= 0xAF,
+	CEE_UNUSED15	= 0xB0,
+	CEE_UNUSED16	= 0xB1,
+	CEE_UNUSED17	= 0xB2,
+	CEE_CONV_OVF_I1	= 0xB3,
+	CEE_CONV_OVF_U1	= 0xB4,
+	CEE_CONV_OVF_I2	= 0xB5,
+	CEE_CONV_OVF_U2	= 0xB6,
+	CEE_CONV_OVF_I4	= 0xB7,
+	CEE_CONV_OVF_U4	= 0xB8,
+	CEE_CONV_OVF_I8	= 0xB9,
+	CEE_CONV_OVF_U8	= 0xBA,
+	CEE_UNUSED50	= 0xBB,
+	CEE_UNUSED18	= 0xBC,
+	CEE_UNUSED19	= 0xBD,
+	CEE_UNUSED20	= 0xBE,
+	CEE_UNUSED21	= 0xBF,
+	CEE_UNUSED22	= 0xC0,
+	CEE_UNUSED23	= 0xC1,
+	CEE_REFANYVAL	= 0xC2,
+	CEE_CKFINITE	= 0xC3,
+	CEE_UNUSED24	= 0xC4,
+	CEE_UNUSED25	= 0xC5,
+	CEE_MKREFANY	= 0xC6,
+	CEE_UNUSED59	= 0xC7,
+	CEE_UNUSED60	= 0xC8,
+	CEE_UNUSED61	= 0xC9,
+	CEE_UNUSED62	= 0xCA,
+	CEE_UNUSED63	= 0xCB,
+	CEE_UNUSED64	= 0xCC,
+	CEE_UNUSED65	= 0xCD,
+	CEE_UNUSED66	= 0xCE,
+	CEE_UNUSED67	= 0xCF,
+	CEE_LDTOKEN		= 0xD0,
+	CEE_CONV_U2		= 0xD1,
+	CEE_CONV_U1		= 0xD2,
+	CEE_CONV_I		= 0xD3,
+	CEE_CONV_OVF_I	= 0xD4,
+	CEE_CONV_OVF_U	= 0xD5,
+	CEE_ADD_OVF		= 0xD6,
+	CEE_ADD_OVF_UN	= 0xD7,
+	CEE_MUL_OVF		= 0xD8,
+	CEE_MUL_OVF_UN	= 0xD9,
+	CEE_SUB_OVF		= 0xDA,
+	CEE_SUB_OVF_UN	= 0xDB,
+	CEE_ENDFINALLY	= 0xDC,
+	CEE_LEAVE		= 0xDD,
+	CEE_LEAVE_S		= 0xDE,
+	CEE_STIND_I		= 0xDF,
+	CEE_CONV_U		= 0xE0,
+	CEE_UNUSED26	= 0xE1,
+	CEE_UNUSED27	= 0xE2,
+	CEE_UNUSED28	= 0xE3,
+	CEE_UNUSED29	= 0xE4,
+	CEE_UNUSED30	= 0xE5,
+	CEE_UNUSED31	= 0xE6,
+	CEE_UNUSED32	= 0xE7,
+	CEE_UNUSED33	= 0xE8,
+	CEE_UNUSED34	= 0xE9,
+	CEE_UNUSED35	= 0xEA,
+	CEE_UNUSED36	= 0xEB,
+	CEE_UNUSED37	= 0xEC,
+//	CEE_UNUSED38	= 0xED,
+	CEE_EXT_INCSFLD	= 0xED,
+	CEE_UNUSED39	= 0xEE,
+	CEE_UNUSED40	= 0xEF,
+
+	CEE_EXT_INC		= 0xF0,
+	CEE_EXT_DEC		= 0xF1,
+	CEE_EXT_CONV_B	= 0xF2,
+	CEE_EXT_ENTER	= 0xF3,
+	CEE_EXT_LEAVE	= 0xF4,
+	CEE_EXT_CALLI	= 0xF5,	//CRIScript extended instruction
+	CEE_EXT_STARGLIST_S = 0xF6,	//CRIScript extended instruction
+	CEE_EXT_STARGLIST = 0xF7,	//CRIScript extended instruction
+	CEE_EXT_FINALLY	= 0xF8,
+	//Store specified parameters from eval stack to current arg list
+//	CEE_UNUSED41	= 0xF0,
+//	CEE_UNUSED42	= 0xF1,
+//	CEE_UNUSED43	= 0xF2,
+//	CEE_UNUSED44	= 0xF3,
+//	CEE_UNUSED45	= 0xF4,
+//	CEE_UNUSED46	= 0xF5,
+//	CEE_UNUSED47	= 0xF6,
+//	CEE_UNUSED48	= 0xF7,
+//	CEE_PREFIX7		= 0xF8,
+	CEE_PREFIX6		= 0xF9,
+	CEE_PREFIX5		= 0xFA,
+	CEE_PREFIX4		= 0xFB,
+	CEE_PREFIX3		= 0xFC,
+	CEE_PREFIX2		= 0xFD,
+	CEE_PREFIX1		= 0xFE,
+	CEE_PREFIXREF	= 0xFF,
+
+	CEE_ARGLIST		= 0xFE00,
+	CEE_CEQ			= 0xFE01,
+	CEE_CGT			= 0xFE02,
+	CEE_CGT_UN		= 0xFE03,
+	CEE_CLT			= 0xFE04,
+	CEE_CLT_UN		= 0xFE05,
+	CEE_LDFTN		= 0xFE06,
+	CEE_LDVIRTFTN	= 0xFE07,
+	CEE_UNUSED56	= 0xFE08,
+	CEE_LDARG		= 0xFE09,
+	CEE_LDARGA		= 0xFE0A,
+	CEE_STARG		= 0xFE0B,
+	CEE_LDLOC		= 0xFE0C,
+	CEE_LDLOCA		= 0xFE0D,
+	CEE_STLOC		= 0xFE0E,
+	CEE_LOCALLOC	= 0xFE0F,
+	CEE_UNUSED57	= 0xFE10,
+	CEE_ENDFILTER	= 0xFE11,
+	CEE_UNALIGNED	= 0xFE12,
+	CEE_VOLATILE	= 0xFE13,
+	CEE_TAILCALL	= 0xFE14,
+	CEE_INITOBJ		= 0xFE15,
+	CEE_CONSTRAINED	= 0xFE16,
+	CEE_CPBLK		= 0xFE17,
+	CEE_INITBLK		= 0xFE18,
+	CEE_UNUSED69	= 0xFE19,
+	CEE_RETHROW		= 0xFE1A,
+	CEE_UNUSED51	= 0xFE1B,
+	CEE_SIZEOF		= 0xFE1C,
+	CEE_REFANYTYPE	= 0xFE1D,
+	CEE_READONLY	= 0xFE1E,
+	CEE_LEAVE_TMP	= 0xFE1F,
+//	CEE_UNUSED53	= 0xFE1F,
+	CEE_UNUSED54	= 0xFE20,
+	CEE_UNUSED55	= 0xFE21,
+	CEE_UNUSED70	= 0xFE22,
+
+	CEE_EXT_CNE		= 0xFE23,	//CRIScript extended instruction
+	CEE_EXT_CGE		= 0xFE24,	//CRIScript extended instruction
+	CEE_EXT_CLE		= 0xFE25,	//CRIScript extended instruction
+
+	//Temporary code for local/arglist resolution
+	CEE_EXT_LDARG	= 0xFEF0,
+	CEE_EXT_STARG	= 0xFEF1,
+	CEE_EXT_LDLOC	= 0xFEF2,
+	CEE_EXT_STLOC	= 0xFEF3,
+
+	// These are not real opcodes
+	CEE_CODE_LABEL	= 0xFEFD,
+	CEE_MACRO_END	= 0xFEFE,
+	CEE_ILLEGAL		= 0xFEFF,
+
+	CEE_BRNULL		= CEE_BRFALSE,
+	CEE_BRNULL_S	= CEE_BRFALSE_S,
+	CEE_BRZERO		= CEE_BRFALSE,
+	CEE_BRZERO_S 	= CEE_BRFALSE_S,
+	CEE_BRINST		= CEE_BRTRUE,
+	CEE_BRINST_S	= CEE_BRTRUE_S,
+	CEE_LDIND_U8	= CEE_LDIND_I8,
+	CEE_LDELEM_U8	= CEE_LDELEM_I8,
+	CEE_LDC_I4_M1x	= CEE_LDC_I4_M1,
+	CEE_ENDFAULT	= CEE_ENDFINALLY,
+//
+	CEE_FORCE_DWORD	= 0xFFFFFFFF,
+};
+
+
+enum POP_BEHAIVOR {
+	POP_0	= 0,
+	POP_1	= 1,
+	POP_I	= 1,
+	POP_I8	= 1,
+	POP_R4	= 1,
+	POP_R8	= 1,
+	POP_REF	= 1,
+	POP_VAR	= -1,
+
+};
+
+enum PUSH_BEHAIVOR {
+	PUSH_0	= 0,
+	PUSH_1	= 1,
+	PUSH_I	= 1,
+	PUSH_I8	= 1,
+	PUSH_R4	= 1,
+	PUSH_R8	= 1,
+	PUSH_REF= 1,
+	PUSH_VAR	= -1,
+
+};
+
+enum OPERAND_PARAMS {
+	OPERAND_PARAMS_FLOAT = 0x80000000,
+	OPERAND_PARAMS_FIELD = 0x40000000,
+	OPERAND_PARAMS_SIZEMASK = 0xf,
+	OPERAND_PARAMS_INLINE_NONE	= 0,
+	OPERAND_PARAMS_SHORT_INLINE_I = 1,
+	OPERAND_PARAMS_SHORT_INLINE_R = 4 | OPERAND_PARAMS_FLOAT,
+	OPERAND_PARAMS_SHORT_INLINE_VAR = 1,
+	OPERAND_PARAMS_SHORT_INLINE_BRTARGET = 1,
+	OPERAND_PARAMS_INLINE_I		= 4,
+	OPERAND_PARAMS_INLINE_METHOD = 4 | OPERAND_PARAMS_FIELD,
+	OPERAND_PARAMS_INLINE_SIG	= 4,
+	OPERAND_PARAMS_INLINE_VAR	= 4,
+	OPERAND_PARAMS_INLINE_BRTARGET = 4,
+	OPERAND_PARAMS_INLINE_SWITCH= 4,
+	OPERAND_PARAMS_INLINE_TYPE	= 4,
+	OPERAND_PARAMS_INLINE_STRING= 4,
+	OPERAND_PARAMS_INLINE_FIELD = 4 | OPERAND_PARAMS_FIELD,
+	OPERAND_PARAMS_INLINE_TOK	= 4,
+	OPERAND_PARAMS_INLINE_R		= 8 | OPERAND_PARAMS_FLOAT,
+	OPERAND_PARAMS_INLINE_I8	= 8,
+};
+
+enum OP_TYPE {
+	IPRIMITIVE,
+	IMACRO,
+	IOBJMODEL,
+	IINTERNAL,
+	IPREFIX,
+};
+
+enum OP_FLOW {
+	NEXT,
+	BREAK,
+	CALL,
+	RETURN,
+	BRANCH,
+	COND_BRANCH,
+	THROW,
+	META,
+};
+
+struct OPCODE_TABLEENTRY {
+	OP_CODE OpCode;
+	const char * pName;
+	int32_t iPopbehaivor;
+	int32_t iPushbehaivor;
+	OPERAND_PARAMS OperandParams;
+	OP_TYPE OpType;
+	int32_t iLength;
+	uint8_t bByte1;
+	uint8_t bByte2;
+	OP_FLOW OpFlow;
+};
+
+typedef std::vector< uint8_t > ILFRAGMENT;
+
+class ILFRAGMENTINFO {
+public:
+	ILFRAGMENTINFO() : MethodRID( 0 ), iNumEvalStackEntries( 0 ) {}
+	~ILFRAGMENTINFO() {}
+	RID		MethodRID;
+	int32_t iNumEvalStackEntries;
+	wstring strScopeName;
+	ILFRAGMENT ILPool;
+};
+
+typedef vector< uint8_t > ILFRAGMENT;
+typedef vector<ILFRAGMENTINFO> V_ILFRAGMENTINFO;
+typedef vector< uint32_t > ILSTACK;
+
+extern OPCODE_TABLEENTRY g_Opecode[];
+
+//This header file from WindowsSDK
+#define OPDEF( NAME, STRING, STACKPOP, STACKPUSH, PARAM, TYPE, LENGTH, BYTE1, BYTE2, FLOW) { NAME, STRING, STACKPOP, STACKPUSH, PARAM, TYPE, LENGTH, BYTE1, BYTE2, FLOW},
+
+}//namespace cri
+
+#ifdef __APPLE__
+//Hash function
+namespace __gnu_cxx {
+	template<>
+	struct hash<cri::OP_CODE>
+	{
+		size_t operator()(const cri::OP_CODE __x) const
+		{
+			return size_t(__x);
+		}
+	};	
+}
+#endif
+

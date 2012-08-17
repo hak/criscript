@@ -1,0 +1,9 @@
+
+/*EN
+	\defgroup CRI_SCRIPT_TOOLS CRI Script Tools
+	This section describes technical information of Tools in the CRI Script SDK.
+
+	- \link cscl CRI Script command line compiler, linker & VM Tool \endlink <br>
+	Describes details of 'cscl'(Cri Script Compler & Linker ).
+	
+*/

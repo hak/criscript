@@ -1,0 +1,1 @@
+"..\..\..\..\tools\bin\bison.exe" -d -v %1 %2 %3

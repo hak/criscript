@@ -1,0 +1,11 @@
+CRIScript Software License, Version 1.0
+
+Copyright (c) 2008 CRI Middleware, Inc.  All rights reserved.
+
+Permission is hereby granted, free of charge, to any person or organization obtaining a copy of the software and accompanying documentation covered by this license (the "Software") to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, and sell copies of the Software, and to permit third parties to whom the Software is furnished to do so, all subject to the following:
+
+The copyright notices in the Software and this entire statement, including the above license grant, this restriction and the following disclaimer and paragraph, must be included in all copies of the Software, in whole or in part, and in all derivative works of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT, REGARDING THE SOFTWARE OR ITS USE AND OPERATION ALONE OR IN COMBINATION WITH ANY PRODUCT.  IN NO EVENT SHALL THE SOFTWARE'S COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES (WHETHER DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY OR CONSEQUENTIAL (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS OR BUSINESS INTERRUPTION)) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, MODIFICATION AND/OR DISTRIBUTION OF THE SOFTWARE, HOWEVER CAUSED AND UNDER ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE), EVEN IF THE SOFTWARE'S COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+No names, trademarks, service marks or logos of CRI Middleware, Inc. may be used to endorse or promote products derived from the Software without specific prior written permission from CRI Middleware, Inc.  Except as expressly stated herein, no other rights or licenses, express or implied, are granted by CRI Middleware, Inc.  Use, installation, modification or redistribution of the Software constitutes acceptance of all of the terms of this license.

@@ -1,0 +1,46 @@
+/*EN
+	\mainpage CRIScript Manual
+
+<b>How to read this manual</b>
+	- \link CRI_SCRIPT_TOOLS CRIScript Tools \endlink <br>
+	Describes details of CRIScript Tools
+		
+	- \link CRI_SCRIPT_SAMPLES CRIScript Samples \endlink <br>
+	Describes details of CRIScript Samples
+
+	- \link CRI_SCRIPT_API CRIScript API reference \endlink <br>
+	CRIScript API reference
+
+*/
+
+/*EN
+	\defgroup CRI_SCRIPT_API CRIScript API and Interfaces
+	CRIScript APIs and Interfaces
+*/
+/*EN
+		\ingroup CRI_SCRIPT_API
+		\defgroup MDL_LIB_GLOBAL Common Functions
+		Functions used globally throughout the CRIScript library
+*/
+/*EN
+		\ingroup CRI_SCRIPT_API
+		\defgroup MDL_LIB_COMPILER CRIScript Compiler Interfaces and definitions
+		Class manages CRIScript compilation
+*/
+/*EN
+		\ingroup CRI_SCRIPT_API
+		\defgroup MDL_LIB_VM CRIScript VM Interfaces and definitions
+		Class manages CRIScript byte code execution
+*/
+/*EN
+		\ingroup CRI_SCRIPT_API
+		\defgroup MDL_LIB_DEBUGGER CRIScript Debugger Interfaces and definitions
+		Class manages CRIScript Debugger
+*/
+/*EN
+		\ingroup CRI_SCRIPT_API
+		\defgroup MDL_LIB_BUILTINOBJECT CRIScript Built-in object Interfaces and definitions
+		Class manages CRIScript Built-in objects
+*/
+
+
